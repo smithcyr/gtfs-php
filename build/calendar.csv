@@ -1,0 +1,15 @@
+service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+year_round,1,1,1,1,1,0,0,20130101,20131231
+academic_spring,1,1,1,1,1,0,0,20130122,20130510
+academic_fall,1,1,1,1,1,0,0,20130826,20131213
+academic_wknd_spring,0,0,0,0,0,1,1,20130122,20130510
+academic_wknd_fall,0,0,0,0,0,1,1,20130826,20131213
+interim_summer,1,1,1,1,1,0,0,20130520,20130802
+interim_winter,1,1,1,1,1,0,0,20131230,20140117
+safe_ride_spring,0,0,0,0,1,1,0,20130122,20130510
+safe_ride_fall,0,0,0,0,1,1,0,20130826,20131213
+summer_wknd,0,0,0,0,0,1,1,20130520,20130802
+summer,1,1,1,1,1,0,0,20130520,20130802
+saturday,0,0,0,0,0,1,0,20130101,20131231
+thurs,0,0,0,1,0,0,0,20130101,20131231
+mtwf,1,1,1,0,1,0,0,20130101,20131231

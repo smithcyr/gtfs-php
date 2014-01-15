@@ -1,0 +1,19 @@
+{
+  "name": "gtfs-php",
+  "version": "0.1.0",
+  "description": "Generates GTFS files based on text files and web services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brandon Neil",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-bg-shell": "~2.3.1",
+    "glob": "~3.2.7",
+    "grunt-http": "~1.0.1",
+    "request": "~2.29.0",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}
