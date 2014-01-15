@@ -2,11 +2,6 @@
 
 include('stoptimesroute.php');
 
-$agency = 'iowa-city';
-$route = 'mall';
-
-//$data = "trip_id,arrival_time,departure_time,stop_id,stop_sequence\n";
-
 $data_coralville = "";
 $data_iowacity = "";
 $data_uiowa = "";
