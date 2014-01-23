@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require './vendor/autoload.php';
 
 include_once("util.php");
 include_once("trips.php");
@@ -16,13 +16,13 @@ function get_route_stop_times($agency, $route_name) {
   ini_set("auto_detect_line_endings", true);
   switch ($agency) {
     case 'coralville':
-      $reader = new \EasyCSV\Reader('imports/coralville.csv');
+      $reader = new \EasyCSV\Reader('./imports/coralville.csv');
       break;
     case 'iowa-city':
-      $reader = new \EasyCSV\Reader('imports/iowacity.csv');
+      $reader = new \EasyCSV\Reader('./imports/iowacity.csv');
       break;
     case 'uiowa':
-      $reader = new \EasyCSV\Reader('imports/uiowa.csv');
+      $reader = new \EasyCSV\Reader('./imports/uiowa.csv');
       break;
     default:
       # code...

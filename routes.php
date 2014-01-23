@@ -1,6 +1,6 @@
 <?php
 
-include("util.php");
+include("inc/util.php");
 
 $routes = get_routes();
 

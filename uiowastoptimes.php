@@ -1,7 +1,7 @@
 <?php
 
-include_once('util.php');
-include('stoptimesroute.php');
+include_once('inc/util.php');
+include('inc/stoptimesroute.php');
 
 unlink('exports/trips/uiowa_trips.csv');
 $tripsUiowaWriter = new \EasyCSV\Writer('exports/trips/uiowa_trips.csv');

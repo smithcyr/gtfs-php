@@ -1,7 +1,7 @@
 <?php
 
-include_once('util.php');
-include('stoptimesroute.php');
+include_once('inc/util.php');
+include('inc/stoptimesroute.php');
 
 unlink('exports/trips/coralville_trips.csv');
 $tripsCoralvilleWriter = new \EasyCSV\Writer('exports/trips/coralville_trips.csv');

@@ -1,6 +1,6 @@
 <?php
 ini_set("auto_detect_line_endings", true);
-include("stoptimesroute.php");
+include("../inc/stoptimesroute.php");
 
 $agency = 'iowa-city';
 $route = 'eventshuttle';
