@@ -5,3 +5,9 @@ build/uiowa_stop_times.txt
 build/iowacity_stop_times.txt
 build/coralville_stop_times.txt
 build/bin
+
+/vendor/
+
+/build/trips/
+
+/build/stoptimes/
