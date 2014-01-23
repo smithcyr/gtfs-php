@@ -10,7 +10,7 @@ module.exports = {
       cmd: 'feedvalidator.py build/bin'
     },
     gtfsScheduleViewer: {
-      cmd: 'schedule_viewer.py --feed_filename exports',
+      cmd: 'schedule_viewer.py --feed_filename build/bin',
       bg: false
     }
 }

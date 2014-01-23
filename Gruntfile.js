@@ -57,4 +57,5 @@ function loadConfig(path) {
   //grunt.registerTask('run', ['bgShell:runNode']);
 
   grunt.loadTasks('tasks');
+
 }
