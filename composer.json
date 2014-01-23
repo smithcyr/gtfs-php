@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jwage/easy-csv": "dev-master"
+    }
+}
