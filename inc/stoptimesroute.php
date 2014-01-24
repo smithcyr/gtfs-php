@@ -37,21 +37,17 @@ function get_route_stop_times($agency, $route_name) {
   // Get the tag array from nextbus, so we can change it to stopids.
   $tag_array = get_tags($agency, $route_name);
 
-  // @TODO remove debug statement.
-  debug($reader->getHeaders());
-
   // Create empty array to hold our data.
   $route_data = array();
 
   // Set trip iterator to 0.
   $trip = 0;
 
-  // Set initial trip. @TODO look into only setting this if there is any data.
-  $route_data['trips'][] = setTrip($trip, $route_name);
-
   // Set stop sequence. @TODO look into if we actually need to increment this
   // by 10 anymore, considering we're pulling all the stops in from the CSV.
   $sequence = 10;
+
+  $previous_time = 1000000;
 
   // Iterate over each row in the CSV.
   while ($row = $reader->getRow()) {
@@ -67,20 +63,6 @@ function get_route_stop_times($agency, $route_name) {
         if(array_key_exists($tag, $tag_array)) {
           // Set the Stop Tag value to the Stop ID.
           $row['Stop Tag'] = $tag_array[$tag];
-        }
-
-        // Get the row's Time.
-        $time = $row['Time (hh:mm:ss)'];
-
-        // If the Stop ID is the first stop in a route.
-        if($row['Stop Tag'] == $stop_array[0]) {
-          // Increase the trip value, indicating a new route has started.
-          $trip = $trip + 5;
-          debug($trip);
-          // Create a new trip.
-          $route_data['trips'][] = setTrip($trip, $route_name);
-          // Reset the stop sequence for the next trip.
-          $sequence = 10;
         }
 
         // Get the row's Time.
@@ -106,6 +88,25 @@ function get_route_stop_times($agency, $route_name) {
           $row['Timepoint Type'] = "AutoFill";
         }
 
+        $diff_time = time_differential($row['Time (hh:mm:ss)'], $previous_time);
+
+        // If the Stop ID is the first stop in a route.
+        if(($row['Stop Tag'] == $stop_array[0]) || ($diff_time)) {
+
+          // Increase the trip value, indicating a new route has started.
+          $trip = $trip + 5;
+          // Create a new trip.
+          $route_data['trips'][] = setTrip($trip, $route_name);
+          // Reset the stop sequence for the next trip.
+          $sequence = 10;
+
+          if($row['Stop Tag'] == $stop_array[0]) {
+          }
+          elseif($diff_time) {
+            debug("Route: " . $row['Route'] . " Trip: " . $trip . " diff time: " . $diff_time);
+          }
+        }
+
         // Increase sequence by 10.
         $sequence = $sequence + 10;
 
@@ -125,11 +126,36 @@ function get_route_stop_times($agency, $route_name) {
           $row_data['stop_headsign'] = $row['Direction'];
           // Create a new stoptimes value.
           $route_data['stoptimes'][] = $row_data;
+
+          $previous_time = strtotime($row['Time (hh:mm:ss)']);
         }
       }
   }
   // Return all the route data, including stop_times and trips.
   return $route_data;
+}
+
+/**
+ * Determines if two times are within just over an hour.
+ * @param  [string] $time
+ * @param  [string] $previous_time
+ * @return [bool]
+ */
+function time_differential($time, $previous_time) {
+    if ($previous_time >= strtotime($time)) {
+      $time_difference = $previous_time - strtotime($time);
+    } elseif ($previous_time <= strtotime($time)) {
+      $time_difference = strtotime($time) - $previous_time;
+    }
+
+    debug($time_difference);
+    debug(date("H:i:s", $time_difference));
+    if($time_difference >= 3661) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
 }
 
 /**
