@@ -3,7 +3,7 @@
 include_once('inc/util.php');
 include('inc/stoptimesroute.php');
 
-unlink('exports/trips/uiowa_trips.csv');
+//unlink('exports/trips/uiowa_trips.csv');
 $tripsUiowaWriter = new \EasyCSV\Writer('exports/trips/uiowa_trips.csv');
 
 $uri = 'http://api.ebongo.org/routelist';
@@ -20,7 +20,7 @@ if ($xml->route) {
     if($agency == "uiowa") {
       $data = get_route_stop_times($agency, $tag);
       if(isset($data['stoptimes'])) {
-        unlink('exports/stoptimes/' . $agency . "_" . $tag . '_stoptimes.csv');
+        //unlink('exports/stoptimes/' . $agency . "_" . $tag . '_stoptimes.csv');
         $stopTimesWriter = new \EasyCSV\Writer('exports/stoptimes/' . $agency . "_" . $tag . '_stoptimes.csv');
         $stopTimesWriter->writeFromArray($data['stoptimes']);
         $tripsUiowaWriter->writeFromArray($data['trips']);
