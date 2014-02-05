@@ -3,8 +3,10 @@ GTFS builder for Coralville, Iowa City, and University of Iowa.
 Mostly php-based with some grunt tasks for some file manipulation.
 
 Status:
+
+ROUTE       SHAPE   DATA
+
 Coralville
-            Shape   Data
 10thst      X       X
 amexpress   X       X
 amnorthlib  X
@@ -15,5 +17,7 @@ pmnorthlib
 pmspecial
 
 Iowa City
+manville    X       X
 
 University of Iowa
+red         X       X
