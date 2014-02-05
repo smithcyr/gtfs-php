@@ -1,56 +1,97 @@
 <?php
 
-require './vendor/autoload.php';
+require '../vendor/autoload.php';
 
 include_once("util.php");
-include_once("trips.php");
+//include_once("trips.php");
+
+//$agency = "coralville";
+//$route_name = "10thst";
+
+//get_route_stop_times($agency, $route_name);
 
 /**
  * Get stop times and trips for a route.
  * @param  [string] $agency     [description]
  * @param  [string] $route_name [description]
+ * @param  [string] $startid [the starting trip sequence for this variant]
  * @return [array]             [an array with stoptimes and trips keys]
  */
-function get_route_stop_times($agency, $route_name) {
+function get_route_stop_times($agency, $route_name, $route_variant, $service_id, $startid) {
+
+
   // Silly Mac.
   ini_set("auto_detect_line_endings", true);
-  switch ($agency) {
-    case 'coralville':
-      $reader = new \EasyCSV\Reader('./imports/coralville.csv');
-      break;
-    case 'iowa-city':
-      $reader = new \EasyCSV\Reader('./imports/iowacity.csv');
-      break;
-    case 'uiowa':
-      $reader = new \EasyCSV\Reader('./imports/uiowa.csv');
-      break;
-    default:
-      # code...
-      break;
-  }
-
 
   // Get the stops array for this route so we can determine what is a normal
   // trip.
-  $stop_array = getStopList($agency, $route_name);
-
-  // Get the tag array from nextbus, so we can change it to stopids.
-  $tag_array = get_tags($agency, $route_name);
+  $stops_array = getStopList($agency, $route_name);
+  $length = count($stops_array);
+  debug("length: " . $length);
+  // Get the trips array so we can iterate through them.
+  $trips_obj = getTripList($agency, $route_variant);
+  //debug($trips_obj->getAll());
 
   // Create empty array to hold our data.
   $route_data = array();
 
   // Set trip iterator to 0.
-  $trip = 0;
-
-  // Set stop sequence. @TODO look into if we actually need to increment this
-  // by 10 anymore, considering we're pulling all the stops in from the CSV.
-  $sequence = 10;
-
-  $previous_time = 1000000;
+  $trip_i = $startid;
 
   // Iterate over each row in the CSV.
-  while ($row = $reader->getRow()) {
+  while ($trip = $trips_obj->getRow()) {
+
+    $sequence = 1;
+    $start_time = strtotime($trip['start_time']);
+    $start_stop_id = $trip['stop_id'];
+    $key = search($stops_array, 'stop_id', $start_stop_id);
+
+    $key = $key[0]['id'];
+    $trip_initial_data = array_slice($stops_array, $key);
+
+    //debug(count($trip_initial_data));
+    $trip_data = array();
+    foreach ($trip_initial_data as $stopkey => $stop) {
+      $stop_data = array();
+      //debug($stop);
+      // Format the stop id into four digits.
+      $stop_number_format = '%1$04d';
+      $stop['stop_id'] = sprintf($stop_number_format, $stop['stop_id']);
+
+      $time_increment = strtotime($stop['relative_time']) - strtotime('today');
+
+      if($stopkey == 0 && $key != 0) {
+        $time_increment = 0;
+      }
+
+      $time = $start_time + $time_increment;
+
+      $stop_data['trip_id'] = $route_name . '_' . $trip_i;
+      $stop_data['arrival_time'] = date("H:i:s", $time);
+      $stop_data['departure_time'] = date("H:i:s", $time);
+      $stop_data['stop_id'] = $stop['stop_id'];
+      $stop_data['stop_sequence'] = $sequence;
+      $stop_data['stop_headsign'] = $stop['head_sign'];
+
+      $route_data['stoptimes'][] = $stop_data;
+
+      $sequence = $sequence + 1;
+      $start_time = $time;
+    }
+
+    $trip_data['route_id'] = $route_name;
+    $trip_data['service_id'] = $service_id;
+    $trip_data['trip_id'] = $route_name . '_' . $trip_i;
+    $trip_data['shape_id'] = "shape_" . $route_name;
+
+    $route_data['trips'][] = $trip_data;
+
+    $trip_i = $trip_i + 1;
+  }
+
+  //debug($route_data);
+    // Iterate over each row in the CSV.
+  /*while ($row = $trips_obj->getRow()) {
       // If the row's Route column matches our route.
       if($row['Route'] == $route_name) {
         // Create empty array to hold our route data.
@@ -130,7 +171,9 @@ function get_route_stop_times($agency, $route_name) {
           $previous_time = strtotime($row['Time (hh:mm:ss)']);
         }
       }
-  }
+    debug($row->start_time);
+  }*/
+
   // Return all the route data, including stop_times and trips.
   return $route_data;
 }
@@ -194,53 +237,62 @@ function getRoute($agency, $route) {
  * Get stops for a route.
  * @param  string $agency
  * @param  string $route_name
- * @return array
+ * @return object
  */
 function getStopList($agency, $route_name) {
-  $route = getRoute($agency, $route_name);
-  $stops = array();
-  if($route) {
-    foreach ($route->directions->direction as $direction) {
-      foreach ($direction->stop as $stop) {
-        $stopnumber = htmlentities((string) $stop['number']);
-        // Convert to XXXX format.
-        $format = '%1$04d';
-        $stopnumber = sprintf($format, $stopnumber);
-        $stops[] = $stopnumber;
-      }
-    }
+  $reader = new \EasyCSV\Reader('../imports/stoptimes/' . $agency . '/' . $route_name . '.csv');
+  /*foreach ($reader->getRow() as $row) {
+    debug("stop: " . $row);
+  }*/
+  $data = array();
+    // Iterate over each row in the CSV.
+
+  $i = 0;
+  while ($row = $reader->getRow()) {
+    //debug($key);
+    $data[] = array(
+      'id' => $i,
+      'stop_id' => $row['stop_id'],
+      'time' => $row['time'],
+      'relative_time' => $row['relative_time'],
+      'head_sign' => $row['head_sign'],
+    );
+    $i = $i + 1;
+    //$time = $row['start_time'];
   }
-  return $stops;
+
+  //debug($key[0]['id']);
+  //debug($data);
+
+
+  return $data;
+}
+
+function search($array, $key, $value) {
+  $results = array();
+
+  if (is_array($array))
+  {
+      if (isset($array[$key]) && $array[$key] == $value)
+          $results[] = $array;
+
+      foreach ($array as $subarray)
+          $results = array_merge($results, search($subarray, $key, $value));
+  }
+
+  return $results;
 }
 
 /**
- * Create a tags to stopid array.
+ * Create a trips object.
  * @param  [string] $agency
  * @param  [string] $route
- * @return [array]
+ * @return object
  */
-function get_tags($agency, $route) {
-  $uri = 'http://webservices.nextbus.com/service/xmlFeed?command=routeConfig&a=';
-  $uri .= $agency;
-  $uri .= '&r=';
-  $uri .= $route;
-
-  $xml_request = file_get_contents($uri);
-
-  $xml = simplexml_load_string($xml_request);
-
-  $tag_array = array();
-
-  if($xml->route){
-    foreach ($xml->route->stop as $stop) {
-      $tag = htmlentities((string) $stop['tag']);
-      $stopId = htmlentities((string) $stop['stopId']);
-
-      $tag_array[$tag] = $stopId;
-
-    }
-    return $tag_array;
-  }
+function getTripList($agency, $route_variant) {
+  $reader = new \EasyCSV\Reader('../imports/trips/' . $agency . '/' . $route_variant . '_trips.csv');
+  //debug($reader->getAll());
+  return $reader;
 }
 
 ?>
