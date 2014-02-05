@@ -15,9 +15,8 @@ function get_shape($agency, $route_id) {
     $data = array();
 
     //debug($xml);
-    $i = 0;
     foreach ($xml->paths->path as $key => $path) {
-      //debug($path);
+      $name = htmlentities((string) $path['name']);
       foreach ($path->point as $point) {
         $lat = htmlentities((string) $point['lat']);
         $lon = htmlentities((string) $point['lng']);
@@ -26,8 +25,7 @@ function get_shape($agency, $route_id) {
         $point_array['shape_id'] = "shape_" . $route_id;
         $point_array['shape_pt_lat'] = $lat;
         $point_array['shape_pt_lon'] = $lon;
-        $point_array['shape_pt_sequence'] = $i;
-        $i = $i + 1;
+        $point_array['shape_path_nextbus'] = $name;
         $data[] = $point_array;
       }
     }

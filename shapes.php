@@ -13,9 +13,9 @@ if($shapes) {
 }
 
 function get_shapes() {
-  unlink('exports/shapes.csv');
-  $shapesWriter = new \EasyCSV\Writer('exports/shapes.csv');
-  $shapesWriter->writeRow('shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence');
+  unlink('exports/shapes_initial.csv');
+  $shapesWriter = new \EasyCSV\Writer('exports/shapes_initial.csv');
+  $shapesWriter->writeRow('shape_id, shape_pt_lat, shape_pt_lon,shape_path_nextbus');
 
   $uri = 'http://api.ebongo.org/routelist';
 
@@ -25,7 +25,7 @@ function get_shapes() {
 
   if($xml) {
     foreach ($xml->route as $route) {
-      debug($route);
+      //debug($route);
       $route_id = $route->tag;
       $route_name = $route->name;
       $agency = $route->agency;
