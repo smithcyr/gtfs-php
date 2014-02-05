@@ -9,5 +9,16 @@ module.exports = {
         filter: 'isFile'
       }
     ]
+  },
+  trips: {
+    files: [
+      {
+        expand: true,
+        flatten: true,
+        src: ['exports/trips/**'],
+        dest: 'build/trips/',
+        filter: 'isFile'
+      }
+    ]
   }
 }

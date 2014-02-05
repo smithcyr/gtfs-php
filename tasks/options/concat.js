@@ -9,9 +9,7 @@ module.exports = {
   trips: {
     src: [
       'build/header_trips.txt',
-      'build/trips/coralville_trips.csv',
-      'build/trips/iowacity_trips.csv',
-      'build/trips/uiowa_trips.csv'
+      'build/trips/*.csv',
     ],
     dest: 'build/bin/trips.txt',
   },
