@@ -5,7 +5,7 @@ include("inc/util.php");
 $stops = get_stops();
 
 if($stops) {
-  $data = "stop_id,stop_name,stop_lat,stop_lon,stop_url\n";
+  $data = "stop_id,stop_name,stop_desc,stop_lat,stop_lon,stop_url\n";
 
   $data .= $stops;
 
@@ -38,7 +38,8 @@ function get_stops() {
       $stoplng = $stop->stoplng;
 
       $data .= $stopnumber . ',';
-      $data .= '"' . $stoptitle . '",';
+      $data .= '"' . $stopnumber . ' - ' . $stoptitle . '",';
+      $data .= '(Stop ID ' . $stopnumber . '),';
       $data .= $stoplat . ',';
       $data .= $stoplng . ',';
       $data .= "http://ebongo.org/stop/" . $stopnumber . "\n";
