@@ -4,6 +4,7 @@ exports
 build/uiowa_stop_times.txt
 build/iowacity_stop_times.txt
 build/coralville_stop_times.txt
+build/shapes.csv
 build/bin
 
 /vendor/
