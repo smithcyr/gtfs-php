@@ -9,7 +9,7 @@ ROUTE       SHAPE   DATA
 Coralville
 10thst      X       X
 amexpress   X       X
-amnorthlib  X
+amnorthlib  X       X
 lantern     X       X
 nightsat
 pmexpress
