@@ -11,7 +11,7 @@ Coralville
 amexpress   X       X
 amnorthlib  X       X
 lantern     X       X
-nightsat
+nightsat    X       X
 pmexpress
 pmnorthlib
 pmspecial
