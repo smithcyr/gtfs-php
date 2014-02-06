@@ -25,7 +25,7 @@ function get_route_stop_times($agency, $route_name, $route_variant, $service_id,
 
   // Get the stops array for this route so we can determine what is a normal
   // trip.
-  $stops_array = getStopList($agency, $route_name);
+  $stops_array = getStopList($agency, $route_variant);
   $length = count($stops_array);
   debug("length: " . $length);
   // Get the trips array so we can iterate through them.
@@ -239,8 +239,8 @@ function getRoute($agency, $route) {
  * @param  string $route_name
  * @return object
  */
-function getStopList($agency, $route_name) {
-  $reader = new \EasyCSV\Reader('../imports/stoptimes/' . $agency . '/' . $route_name . '.csv');
+function getStopList($agency, $route_variant) {
+  $reader = new \EasyCSV\Reader('../imports/stoptimes/' . $agency . '/' . $route_variant . '.csv');
   /*foreach ($reader->getRow() as $row) {
     debug("stop: " . $row);
   }*/
