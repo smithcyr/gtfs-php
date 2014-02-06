@@ -20,6 +20,7 @@ Iowa City
 7thave      X       X
 brdwy       X       X
 brdwynw     X       X* Still need night trips
+courthill   X       X
 manville    X       X
 
 University of Iowa
