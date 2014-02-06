@@ -12,7 +12,7 @@ amexpress   X       X
 amnorthlib  X       X
 lantern     X       X
 nightsat    X       X
-pmexpress
+pmexpress   X       X
 pmnorthlib
 pmspecial
 
