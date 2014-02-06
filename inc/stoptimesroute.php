@@ -66,9 +66,15 @@ function get_route_stop_times($agency, $route_name, $route_variant, $service_id,
 
       $time = $start_time + $time_increment;
 
+      $time_initial = date("H:i:s", $time);
+
+      $time_final = preg_replace("/^00/m", "24", $time_initial);
+      $time_final = preg_replace("/^01/m", "25", $time_final);
+      $time_final = preg_replace("/^02/m", "26", $time_final);
+
       $stop_data['trip_id'] = $route_name . '_' . $trip_i;
-      $stop_data['arrival_time'] = date("H:i:s", $time);
-      $stop_data['departure_time'] = date("H:i:s", $time);
+      $stop_data['arrival_time'] = $time_final;
+      $stop_data['departure_time'] = $time_final;
       $stop_data['stop_id'] = $stop['stop_id'];
       $stop_data['stop_sequence'] = $sequence;
       $stop_data['stop_headsign'] = $stop['head_sign'];
