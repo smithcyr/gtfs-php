@@ -13,8 +13,8 @@ amnorthlib  X       X
 lantern     X       X
 nightsat    X       X
 pmexpress   X       X
-pmspecial
 pmnorthlib  X       X
+pmspecial   X       X
 
 Iowa City
 manville    X       X
@@ -26,3 +26,8 @@ red         X       X
 Notes:
 There are errors in the North Liberty routes- descrepancies between the
 information in NextBus/Bongo and the information provided by Coralville Transit.
+
+PM Special runs when Iowa City Schools are in session.
+See http://www.iowacityschools.org/pages/ICCSD/District_Overview/7820225131850230500 for updates.
+
+No exeptions have been added yet, i.e. spring break.
