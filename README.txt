@@ -13,11 +13,16 @@ amnorthlib  X       X
 lantern     X       X
 nightsat    X       X
 pmexpress   X       X
-pmnorthlib
 pmspecial
+pmnorthlib  X       X
 
 Iowa City
 manville    X       X
 
 University of Iowa
 red         X       X
+
+
+Notes:
+There are errors in the North Liberty routes- descrepancies between the
+information in NextBus/Bongo and the information provided by Coralville Transit.
