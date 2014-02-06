@@ -26,6 +26,8 @@ red         X       X
 Notes:
 There are errors in the North Liberty routes- descrepancies between the
 information in NextBus/Bongo and the information provided by Coralville Transit.
+When the data is corrected in NextBus, stop_id 5201 must be changed to 5203 in
+pmnorthlib and stop_id 5221 to 5223.
 
 PM Special runs when Iowa City Schools are in session.
 See http://www.iowacityschools.org/pages/ICCSD/District_Overview/7820225131850230500 for updates.
