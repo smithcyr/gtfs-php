@@ -17,7 +17,7 @@ include_once("util.php");
  * @param  [string] $startid [the starting trip sequence for this variant]
  * @return [array]             [an array with stoptimes and trips keys]
  */
-function get_route_stop_times($agency, $route_name, $route_variant, $service_id, $startid) {
+function get_route_stop_times($agency, $route_name, $route_variant, $service_id, $startid, $shape_variant) {
 
 
   // Silly Mac.
@@ -88,7 +88,7 @@ function get_route_stop_times($agency, $route_name, $route_variant, $service_id,
     $trip_data['route_id'] = $route_name;
     $trip_data['service_id'] = $service_id;
     $trip_data['trip_id'] = $route_name . '_' . $trip_i;
-    $trip_data['shape_id'] = "shape_" . $route_name;
+    $trip_data['shape_id'] = "shape_" . $shape_variant;
 
     $route_data['trips'][] = $trip_data;
 

@@ -2,13 +2,14 @@
 ini_set("auto_detect_line_endings", true);
 include("../inc/stoptimesroute.php");
 
-$agency = 'coralville';
-$route = 'lantern';
-$service_id = "coralville_weekday";
+$agency = 'iowacity';
+$route = 'ndodge';
+$service_id = "iowacity_weekday";
 $startid = 1000;
-$route_variant = "lantern";
+$route_variant = "ndodge_a";
+$shape_variant = "ndodge_a";
 
-$data = get_route_stop_times($agency, $route, $route_variant, $service_id, $startid);
+$data = get_route_stop_times($agency, $route, $route_variant, $service_id, $startid, $shape_variant);
 
 debug($data['trips']);
 
